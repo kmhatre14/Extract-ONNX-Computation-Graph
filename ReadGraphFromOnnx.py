@@ -12,8 +12,14 @@ import matplotlib.pyplot as plt
 #Extract the full graph from te 
 def extractGraph(mg):
     allNodes = [n for n in mg.node]
-    print("No of nodes in Graph : "+len(allNodes))
-    
+    print("Number of Nodes in Graph : "+str(len(allNodes)))
+    print("Layer \t Input \t output")
+    for node in allNodes:
+        print(node.op_type,node.input,node.output)
+#        if node.op_type == 'Add':
+#            print("Input Node:"+str(node.input))
+#            print("Out Node:"+str(node.output))
+    #print(allNodes[0])
 
 #main  
 def main():
