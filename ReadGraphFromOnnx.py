@@ -9,7 +9,13 @@ import onnx as ox
 import matplotlib.pyplot as plt
 
 
-#Extract the full graph from te 
+#Extract the weights from the model
+def extractWeights(mg):
+    allWeights = [n for n in mg.initializer]
+    print("Number of Wights Matrix in Model : "+str(len(allWeights)))    
+    for w in allWeights:
+        print(w.name)    
+#Extract the full graph from the model
 def extractGraph(mg):
     allNodes = [n for n in mg.node]
     print("Number of Nodes in Graph : "+str(len(allNodes)))
@@ -26,8 +32,8 @@ def main():
     # Load Model
     model = ox.load('mobileNet.onnx')
     modelGraph = model.graph
-    extractGraph(modelGraph)
-
+    #extractGraph(modelGraph)
+    extractWeights(modelGraph)
 # Define main function
 if __name__ == '__main__': 
     main()
