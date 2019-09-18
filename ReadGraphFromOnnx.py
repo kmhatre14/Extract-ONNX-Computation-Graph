@@ -7,6 +7,7 @@
 
 import onnx as ox
 import matplotlib.pyplot as plt
+import argparse
 
 
 #Extract the weights from the model
@@ -29,11 +30,15 @@ def extractGraph(mg):
 
 #main  
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--file", "-f", type=str, required=True)
+    args = parser.parse_args()
+    print(args)  
     # Load Model
-    model = ox.load('mobileNet.onnx')
+    model = ox.load(args.file)
     modelGraph = model.graph
-    #extractGraph(modelGraph)
-    extractWeights(modelGraph)
+    extractGraph(modelGraph)
+    #extractWeights(modelGraph)
 # Define main function
 if __name__ == '__main__': 
     main()
