@@ -10,6 +10,25 @@ import matplotlib.pyplot as plt
 import argparse
 import networkx as nx
 
+#Get Parallel Path from the network
+def get_parallel_paths(G):
+    colpaths = []
+    for i in G.nodes():
+        for j in G.nodes():
+            if i == j:
+                continue
+            nbp = nobranchpaths(G, i, j)
+            if len(nbp) > 1:
+                colpaths += [nbp]
+    return colpaths
+
+def nobranchpaths(G, u, v):
+    paths = []
+    for p in nx.all_simple_paths(G, u, v):
+        if len(p) == 2 or max(G.degree(i) for i in p[1:-1]) == 2:
+            paths += [p]
+    return paths
+
 #Create Networkx Ggaph from nodes
 def createNWxGraph(allnode,nwxg):
     for node in allnode:
@@ -60,6 +79,9 @@ def main():
     NWg = nx.Graph()
     modelGraph = model.graph
     NWg = createNWxGraph(extractGraph(modelGraph),NWg)
+    parallelPath = get_parallel_paths(NWg)
+    for p in parallelPath:    
+        print(p)    
     nx.draw_networkx(NWg,with_labels=True)
     plt.show()
     #extractGraph(modelGraph)
